@@ -121,11 +121,23 @@ sudo apt info git
 ```bash
 sudo yum list
 ```
+- List the number of packages
+
+```bash
+sudo yum list | wc -l
+```
+
 - List all available packages for Ubuntu instance.
 
 ```bash
 sudo apt list
 ```
+- List the number of packages
+
+```bash
+sudo apt list | wc -l
+```
+
 - List all available git packages for Amazon Linux instance.
 
 ```bash
@@ -141,11 +153,23 @@ sudo apt list git
 ```bash
 sudo yum list installed
 ```
+
+- List the number of installed packages.
+```bash
+sudo yum list --installed | wc -l
+```
+
 - List all installed packages on Ubuntu instance.
 
 ```bash
 sudo apt list --installed
 ```
+
+- List the number of installed packages.
+```bash
+sudo apt list --installed | wc -l
+```
+
 - List all available versions of git packages on Amazon Linux instance.
 
 ```bash
