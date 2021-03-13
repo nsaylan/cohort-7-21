@@ -88,6 +88,8 @@ Followings are some of features of Flask Framework;
 
 - Create an object named `app` from imported Flask module.
 
+- Create a folder named 'templates'.
+
 - Create an `index.html` file under templates folder.
 
 - Create a function named `head` which sents number `number1` and `number2` variables to the `index.html`. Use these variables into the `index.html` file. Assign a URL route the `head` function with decorator `@app.route('/')`.

@@ -31,6 +31,11 @@ mkdir shell-scripting && cd shell-scripting
 - Create a `script` file named `basic.sh`. Note all the scripts would have the .sh extension.
 
 ```bash
+vi basic.sh
+```
+- Write the command below in the file created
+
+```bash
 #!/bin/bash
 echo "Hello World"
 ```
@@ -184,9 +189,20 @@ echo $content
 - let's see that in a script. Create a file and name it `command-substitution.sh`.
 
 ```bash
-#!/bin/bash
+vi command-substitution.sh
+```
+
+```bash
+#!/bin/
+bash
 working_directory=$(pwd)
 echo "Welcome, your working directory is $working_directory."
+```
+
+```bash
+#!/bin/bash
+user=$(whoami)
+echo "Welcome, $user"
 ```
 
 - Make the script executable and execute it. 
