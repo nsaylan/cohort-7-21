@@ -43,6 +43,7 @@ mkdir conditional-statements && cd conditional-statements
 ```bash
 #!/bin/bash
 read -p "Input a number: " number
+
 if [[ $number -gt 50 ]]
 then
   echo "The number is greater than 50."
@@ -282,7 +283,8 @@ chmod +x nested-if-statement.sh
 | -------- | ----------- |
 | !        | negation    |
 | &&       | and         |
-| ||       | or          |
+| \|\|     | or          |
+
 
 - `!`  inverts a true condition into false and vice versa.
 
