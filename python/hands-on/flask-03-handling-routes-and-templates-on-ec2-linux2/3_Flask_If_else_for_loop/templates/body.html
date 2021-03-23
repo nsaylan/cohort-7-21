@@ -7,10 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    {% for x in range(1,11) %}
-        {% if x % 2 == 0 %}
-        <li>Number {{ x }} is even</li>
-        {% endif %}    
-    {% endfor %}
+    <ul>
+        {% for x in object %}
+        <li>{{x}}</li>
+        {%endfor%}
+    </ul>
+<h2>This application is created by {{ developer_name}}</h2>
+  
 </body>
 </html>
