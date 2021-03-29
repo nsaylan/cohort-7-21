@@ -106,18 +106,14 @@ When sending request, the client can send data with using different http methods
 - Update the installed packages and package cache on your instance.
 
 - Install `Python 3` packages.
-sudo yum install python3 -y
 
 - Check the python3 version
-python3 --version
 
 - Install `Python 3 Flask` framework.
-sudo pip3 install Flask
 
 - Check the versions of Flask framework packages
-pip3 –version
 
 - Pull the files from github repo
-wget https://raw.githubusercontent.com/nsaylan/cohort-7-21/master/python/hands-on/flask-04-handling-forms-run-on-ec2-linux2/app-form-handling.py
+
 - Run the Flask application
-python3 app-form-handling.py
+
