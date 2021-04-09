@@ -134,33 +134,17 @@ When sending request, the client can send data with using different http methods
 
 - Add a statement to run the Flask application which can be reached from any host on port 80.
 
-## Part 4 - Run the Hello World App on EC2 Instance
+## Part 4 - Write same application with MySQL
 
-- Download the web application file from GitHub repo.
+- Please write same application that was given in Part3 with MYSQL
 
-- Run the form handling web application
+- Create an RDS database and use it as database of application
 
-
-- Connect the web application from the web browser and try every page configured
-
-
-- Connect the web application default `/` page from the terminal with `curl` command.
+- commit your code and push it to your GitHub repo
 
 
-- Connect the web application `/greet` page with no param from the terminal with `curl` command.
+- Launch an Instance and pull your files in to it
 
 
-- Connect the web application `/greet` page with `user=Sergio%20Taco` param from the terminal with `curl` command.
-
-
-- Connect the web application `/login` page with `GET` method from the terminal with `curl` command.
-
-
-- Connect the web application `/login` page with `POST` method from the terminal with `curl` command.
-
-
-- Run the `sqlite` web application and showcase from the web browser.
-
-
-- Run the `MySQL` web application and showcase from the web browser.
+- Run your application on EC2
 
