@@ -99,7 +99,7 @@ def add_email():
         user_name = request.form['username']
         user_email = request.form['useremail']
         result = insert_email(user_name, user_email)
-        return render_template('add-email.html', result=result, show_result=True)
+        return render_template('add-email.html', result_html=result, show_result=True)
     else:
         return render_template('add-email.html', show_result=False)
 
