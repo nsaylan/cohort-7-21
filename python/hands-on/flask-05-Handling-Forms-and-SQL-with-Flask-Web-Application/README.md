@@ -90,8 +90,11 @@ When sending request, the client can send data with using different http methods
 
 - Install `flask_sqlalchemy`.
 
+pip3 install flask_sqlalchemy
+
 - Install `flask_mysql`.
 
+pip3 install flask_mysql
 
 ## Part 3 - Write a Sample Web Application with forms and database implementation on GitHub Repo
 
