@@ -1,12 +1,12 @@
 # Import Flask modules
-from flask import Flask, redirect, url_for, render_template, request
+from flask import Flask, render_template, request
 from flaskext.mysql import MySQL
 
 # Create an object named app
 app = Flask(__name__)
 
 # Configure mysql database
-app.config['MYSQL_DATABASE_HOST'] = 'clarusway.c90mhmjiphld.us-east-1.rds.amazonaws.com' # güncellenecek
+app.config['MYSQL_DATABASE_HOST'] = 'PLEASE WRITE HERE YOUR RDS ENDPOINT'
 app.config['MYSQL_DATABASE_USER'] = 'admin'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'Clarusway_1'
 app.config['MYSQL_DATABASE_DB'] = 'clarusway'
@@ -31,9 +31,9 @@ CREATE TABLE users (
 data = """
 INSERT INTO clarusway.users 
 VALUES 
-    ("Buddy Rich", "buddy@clarusway.com"),
-    ("Candido", "candido@clarusway.com"),
-	("Charlie Byrd", "charlie.byrd@clarusway.com");
+    ("ikbal", "ikbal@bmw.com"),
+    ("kemal", "kemal@mercedes.com"),
+	("burcu", "burcu@porche.com");
 """
 cursor.execute(drop_table)
 cursor.execute(users_table)
@@ -72,7 +72,7 @@ def insert_email(name, email):
         VALUES ('{name}', '{email}');
         """
         cursor.execute(insert)
-        response = f'User {name} added successfully'
+        response = f'User {name} and {email} have been added successfully'
     # if there is user with same name, then give warning
     else:
         response = f'User {name} already exits.'
