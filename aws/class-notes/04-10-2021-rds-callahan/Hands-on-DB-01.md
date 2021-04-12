@@ -175,7 +175,7 @@ Then a window that shows the review of the table pops up on the screen. Click Ap
 - Add data as shown below:
 
 ```sql
-INSERT INTO Personnel_Info
+INSERT INTO clarusway.Personnel_Info
 (ID_number, Name, Surname, Gender)
 VALUES
 ('1234','Kumbwi','Clarusway','Male'), ('56789','Callahan','Clarusway','Male');
@@ -184,7 +184,7 @@ VALUES
 - Write a query to show all data in the `Personel_Info` table
 
 ```sql
-SELECT * FROM clarusway.Personel_Info;
+SELECT * FROM clarusway.Personnel_Info;
 ```
 
 - Try to delete RDS and show that RDS instance can not be deleted because of the `Deletion Protection`.
