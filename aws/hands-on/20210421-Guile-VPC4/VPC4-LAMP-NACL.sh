@@ -12,7 +12,7 @@
    # Subnet: clarus-az1b-public-subnet
    # Sec Group: Wordpress/BastionHost
    
-#!/bin/bash
+ #!/bin/bash
 
 yum update -y
 amazon-linux-extras install -y lamp-mariadb10.2-php7.2 php7.2
@@ -93,7 +93,7 @@ ssh ec2-user@10.7.2.20 (Private IP of Database Instance)
 	sudo yum install -y mariadb-server
 	
 # 12 Create Natinstance in "Subnet PublicA"
-  # Please select NAT Type instance (from "Community AMIs")
+  # Please select NAT Type instance
   # VPC: clarus-vpc-a
   # Subnet: clarus-az1a-public-subnet
   # Sec Group: Natinstance_Sec.Grp
@@ -173,7 +173,7 @@ sudo vi wp-config.php
 
      #define( 'DB_PASSWORD', '123456789' );
 
-     # local ("Private DNS of DB instance")
+     # local ("Private DNS")
 Esc :wq ---> Enter
 sudo systemctl restart httpd
 
@@ -189,7 +189,7 @@ sudo systemctl restart httpd
 
 # 2 click 'Create network ACL' button
 
-Name Tag      :clarus-private1c-nacl
+Name Tag      :clarus-private1a-nacl
 VPC           :clarus-vpc-a
 
 - Select Inbound Rules ---> Edit Inbound rules ---> Add Rule
