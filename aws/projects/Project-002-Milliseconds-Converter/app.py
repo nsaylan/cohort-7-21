@@ -21,12 +21,12 @@ def main_post():
     if request.method == 'POST':
         alpha = request.form['number']
         if not alpha.isdecimal():
-            return render_template('index.html', developer_name = 'Serdar', not_valid = True)
+            return render_template('index.html', developer_name = 'Noble', not_valid = True)
         if not (0 < int(alpha)):
-            return render_template('index.html', developer_name = 'Serdar', not_valid = True)
-        return render_template('result.html', developer_name=' Serdar', milliseconds = alpha, result = convert(int(alpha)))
+            return render_template('index.html', developer_name = 'Noble', not_valid = True)
+        return render_template('result.html', developer_name=' Noble', milliseconds = alpha, result = convert(int(alpha)))
     else:
-        return render_template('index.html', developer_name ='Serdar', not_valid = False)
+        return render_template('index.html', developer_name ='Noble', not_valid = False)
 
 
 if __name__ == '__main__':

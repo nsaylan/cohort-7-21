@@ -42,7 +42,7 @@ Resources:
       LaunchTemplateData: 
         ImageId: ami-0742b4e673072066f
         InstanceType: t2.micro
-        KeyName: serdar
+        KeyName: First_key_pair
         SecurityGroupIds: 
           - !GetAtt WebServerSecurityGroup.GroupId
         TagSpecifications: 
@@ -57,8 +57,8 @@ Resources:
             yum update -y
             yum install python3 -y
             pip3 install flask
-            TOKEN="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-            FOLDER="https://$TOKEN@raw.githubusercontent.com/serdarcw/Project-002-Milliseconds-Converter/master"
+            TOKEN="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"
+            FOLDER="https://$TOKEN@raw.githubusercontent.com/nsaylan/cohort-7-21/master/aws/projects/Project-002-Milliseconds-Converter"
             curl -s --create-dirs -o "/home/ec2-user/templates/index.html" -L $FOLDER/templates/index.html
             curl -s --create-dirs -o "/home/ec2-user/templates/result.html" -L $FOLDER/templates/result.html
             curl -s --create-dirs -o "/home/ec2-user/app.py" -L $FOLDER/app.py
