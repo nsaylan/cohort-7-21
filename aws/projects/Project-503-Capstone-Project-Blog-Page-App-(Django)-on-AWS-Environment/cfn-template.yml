@@ -1,0 +1,237 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+    CloudFormation Template for Capstone Prject.
+Parameters:
+  MyVPC:
+    Description: VPC Id of your existing account
+    Type: AWS::EC2::VPC::Id
+
+  KeyName:
+    Description: Please enter your Key pair
+    Type: AWS::EC2::KeyPair::KeyName
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+Resources:
+  
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP for Application Load Balancer
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0  
+      VpcId: !Ref MyVPC
+  
+  WebServerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP for Flask Web Server and SSH for getting into EC2
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: 0.0.0.0/0
+          SourceSecurityGroupId: !GetAtt ALBSecurityGroup.GroupId
+      VpcId: !Ref MyVPC
+    
+    
+  WebServerLT:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateData: 
+        ImageId: ami-0747bdcabd34c712a
+        InstanceType: t2.micro
+        KeyName: !Ref KeyName
+        SecurityGroupIds: 
+          - !GetAtt WebServerSecurityGroup.GroupId
+        TagSpecifications: 
+          - ResourceType: instance
+            Tags:
+              - Key: Name
+                Value: !Sub Web Server of ${AWS::StackName} Stack
+        UserData:
+          Fn::Base64:
+            !Sub 
+              - | 
+                #! /bin/bash
+                apt-get update -y
+                apt-get install git -y
+                apt-get install python3 -y 
+                cd /home/ubuntu/
+                wget https://github.com/nsaylan/cohort-7-21/tree/master/aws/projects/Project-503-Capstone-Project-Blog-Page-App-(Django)-on-AWS-Environment
+                cd /home/ubuntu/Project-503-Capstone-Project-Blog-Page-App-(Django)-on-AWS-Environment
+                apt install python3-pip -y
+                apt-get install python3.7-dev libmysqlclient-dev -y
+                pip3 install -r requirements.txt
+                cd /home/ubuntu/Project-503-Capstone-Project-Blog-Page-App-(Django)-on-AWS-Environment/src
+                python3 manage.py collectstatic --noinput
+                python3 manage.py makemigrations
+                python3 manage.py migrate
+                python3 manage.py runserver 0.0.0.0:80
+              - MyDBURI: !GetAtt MyDatabaseServer.Endpoint.Address
+  WebServerTG:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      TargetType: instance
+      UnhealthyThresholdCount: 3
+      HealthyThresholdCount: 2
+      VpcId: !Ref MyVPC
+  ApplicationLoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      IpAddressType: ipv4
+      Scheme: internet-facing
+      SecurityGroups:
+        - !GetAtt ALBSecurityGroup.GroupId 
+      Subnets: !Ref Subnets
+      Type: application
+  ALBListener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions: #required
+        - TargetGroupArn: !Ref WebServerTG
+          Type: forward
+      LoadBalancerArn: !Ref ApplicationLoadBalancer #required
+      Port: 80 #required
+      Protocol: HTTP #required
+  
+  WebServerASG:
+    Type: "AWS::AutoScaling::AutoScalingGroup"
+    Properties:
+      AvailabilityZones:
+        !GetAZs ""
+      DesiredCapacity: 2
+      HealthCheckGracePeriod: 90
+      HealthCheckType: ELB
+      LaunchTemplate:
+        LaunchTemplateId: !Ref WebServerLT
+        Version: !GetAtt WebServerLT.LatestVersionNumber
+      MaxSize: 4 #required
+      MinSize: 2 #required
+      TargetGroupARNs:
+        - !Ref WebServerTG
+  ASPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref WebServerASG #required
+      EstimatedInstanceWarmup: 200
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        TargetValue: % 70
+
+  MyDBSecurityGroup:
+    Type: AWS::RDS::DBSecurityGroup
+    Properties:
+      DBSecurityGroupIngress: #required
+        - CIDRIP: 0.0.0.0/0
+        - EC2SecurityGroupId: !GetAtt WebServerSecurityGroup.GroupId
+      GroupDescription: This DB for Back-end Access #required
+                
+  MyDatabaseServer:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 20
+      DBInstanceClass: db.t2.micro
+      BackupRetentionPeriod: 0
+      DBInstanceIdentifier: phonebook-app-db
+      DBName: Capstone
+      DBSecurityGroups: 
+        - !Ref MyDBSecurityGroup
+      Engine: mysql
+      EngineVersion: 8.0.20
+      MasterUsername: admin
+      MasterUserPassword: clarusway
+      Port: 3306
+      PubliclyAccessible: true
+      StorageType: standard
+
+  Dynamodb:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      KeySchema: #required
+        - AttributeName: Primary
+          KeyType: HASH
+
+  S3Bucket1:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: AWS_STORAGE_Noble
+  S3Bucket2:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: AWS_STORAGE_Failover    
+IAMRole:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument: Json #required
+    Description: String
+    ManagedPolicyArns:
+      - String
+    MaxSessionDuration: Integer
+    Path: String
+    PermissionsBoundary: String
+    Policies:
+      - Policy
+    RoleName: String
+    Tags:
+      - Tag
+  LogicalID:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code: #required
+        Code
+      CodeSigningConfigArn: String
+      DeadLetterConfig:
+        DeadLetterConfig
+      Description: String
+      Environment:
+        Environment
+      FileSystemConfigs:
+        - FileSystemConfig
+      FunctionName: String
+      Handler: String
+      ImageConfig:
+        ImageConfig
+      KmsKeyArn: String
+      Layers:
+        - String
+      MemorySize: Integer
+      PackageType: String
+      ReservedConcurrentExecutions: Integer
+      Role: String #required
+      Runtime: String
+      Tags:
+        - Tag
+      Timeout: Integer
+      TracingConfig:
+        TracingConfig
+      VpcConfig:
+        VpcConfig
+Outputs:
+  WebsiteURL:
+    Value: !Sub 
+      - http://${ALBAddress}
+      - ALBAddress: !GetAtt ApplicationLoadBalancer.DNSName
+    Description: Phonebook Application Load Balancer URL
