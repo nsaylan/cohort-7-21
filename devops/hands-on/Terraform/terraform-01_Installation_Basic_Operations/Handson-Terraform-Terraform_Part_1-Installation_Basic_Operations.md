@@ -139,7 +139,7 @@ terraform {
 }
 
 resource "aws_instance" "tf-ec2" {
-  ami           = "ami-0742b4e673072066f"
+  ami           = "ami-0d5eff06f840b45e9"
   instance_type = "t2.micro"
   tags = {
     "Name" = "created-by-tf"
