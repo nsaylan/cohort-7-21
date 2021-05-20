@@ -41,14 +41,14 @@ variable "ec2-ami" {
 resource "aws_instance" "tf-ec2" {
   ami           = var.ec2-ami
   instance_type = var.ec2-type
-  key_name      = "mk"
+  key_name      = "mk" # dont forget to change key name...
   tags = {
     Name = "${var.ec2-name}-💻🎯🎉"
   }
 }
 
 variable "s3-bucket-name" {
-  default = "oliver-s3-bucket-variable-addwhateveryouwant"
+  default = "oliver-s3-bucket-variable-addwhateveryouwant" # name it...
 }
 
 resource "aws_s3_bucket" "tf-s3" {
