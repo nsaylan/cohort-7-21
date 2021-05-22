@@ -87,26 +87,29 @@ apt-get update && apt-get upgrade -y
   - Try to edit `myfile.txt` file with `vim` editor and show that there is no `vim` installed.
 
     ```bash
-    vim myfile.txt
+    vim/nano myfile.txt
     ```
 
-  - Install `vim` editor.
+  - Install `vim/nano` editor.
 
     ```bash
-    apt-get install vim
+    apt-get install vim/nano
     ```
 
   - Edit `myfile.txt` file with `vim` editor and type `Hello from the Ubuntu Container` to show that `vim` command can be run now.
 
     ```bash
-    vim myfile.txt
+    vim/nano myfile.txt
     ```
+
+  - type smt into the myfile.txt file  
 
 - Exit the `ubuntu` container and return to ec2-user bash shell.
 
 ```bash
 exit
 ```
+- When I exit from the container, it stops. so, we can not see it with "docker ps" command.
 
 - Show the list of all containers available on Docker machine and explain container properties.
 
