@@ -227,7 +227,7 @@ variable "users" {
 }
 ```
 
-- Go to the `main.tf` file make the changes. Change the IAM role and add IAMFullAccess policy.
+- Go to the `main.tf` file make the changes. Change the IAM role and add "IAMFullAccess" policy.
 
 ```bash
 resource "aws_s3_bucket" "tf-s3" {
