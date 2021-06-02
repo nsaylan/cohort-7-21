@@ -193,7 +193,7 @@ CMD python ./welcome.py
 - Build Docker image from Dockerfile locally, tag it as `<Your_Docker_Hub_Account_Name>/<Your_Image_Name>:<Tag>` and explain steps of building. Note that repo name is the combination of `<Your_Docker_Hub_Account_Name>/<Your_Image_Name>`.
 
 ```bash
-docker build -t "nsaylan/flask-app:2.0" -f ./Dockerfile-alpine . 
+docker build -t "nsaylan/flask-app:2.0" -f ./Dockerfile-alpine . #-f tag file name demek. dockfile dışında bir belge kullanılacaksa kullanılır.
 docker image ls
 ```
 
