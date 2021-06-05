@@ -194,6 +194,10 @@ thousand                         Warning -> 'Invalid input: Phone number should 
 
 - Step 5: Prepare a Terraform template to deploy your app on Application Load Balancer together with RDS
 
+- Installing terraform: sudo yum update -y && sudo yum install -y yum-utils && sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo && sudo yum -y install terraform && sudo yum -y install git && sudo yum install tree -y && terraform --version && git --version && mkdir tf-files && cd tf-files && touch main.tf outputs.tf provider.tf sec-gr.tf user-data.sh
+
+- Token: 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
+
 - Step 6: Initialize Terraform in your current folder.
 
 - Step 7: Run terraform commands (`terraform plan` and `terraform apply`) to deploy your application on AWS Cloud using Terraform template to showcase your app.
