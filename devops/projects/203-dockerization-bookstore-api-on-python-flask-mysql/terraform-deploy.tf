@@ -13,7 +13,7 @@ provider "aws" {
 resource "aws_instance" "tf-docker-ec2" {
   ami             = "ami-09d95fab7fff3776c"
   instance_type   = "t2.micro"
-  key_name        = "northvirginia"
+  key_name        = "First_key_pair"
   //  Write your pem file name
   security_groups = ["docker-sec-gr-202"]
   tags = {
