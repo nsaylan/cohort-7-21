@@ -1,0 +1,1 @@
+- [Kubernetes Takeaway-01 : Kubernetes Introduction](./1.INTRODUCTION-TO-KUBERNETES-cohort-07-21.pdf)
