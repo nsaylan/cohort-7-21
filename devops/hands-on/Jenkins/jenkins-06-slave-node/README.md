@@ -30,9 +30,8 @@ At the end of the this hands-on training, students will be able to;
 ```bash
 sudo yum update -y
 sudo amazon-linux-extras install java-openjdk11 -y
-sudo yum install java-devel -y
+sudo yum install java-devel 
 ```
-java -version
 
 - Install Git
   
@@ -47,7 +46,6 @@ sudo yum install git -y
 ```bash
 sudo su - jenkins
 ```
-# if get "permission denied", then "cd /etc" and "sudo su -s /bin/bash jenkins"
 
   - Generate a public and private key with keygen.
 
@@ -120,7 +118,7 @@ wget http://<jenkins_master_ip>:8080/jnlpJars/slave.jar
 
 - Enter `Linux` in the "Labels" field.
 
-- Select `Launch agent via execution of command on the controller` from dropdown menu in the "Launch method" field.
+- Select `Launch agent via execution of command on the master` from dropdown menu in the "Launch method" field.
 
 - Enter `ssh root@<slave_ip> java -jar /root/bin/slave.jar` in the "Launch command" field.
 

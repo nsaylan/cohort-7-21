@@ -272,7 +272,7 @@ kubectl logs <pod-name> -c <container-name>
 - Execute a command in a container.
 
 ```bash
-kubectl exec <pod-name> -- date # konteynır içinden tarih getirme
+kubectl exec <pod-name> -- date
 ```
 
 ```bash
@@ -282,7 +282,7 @@ kubectl exec <pod-name> -- cat /usr/share/nginx/html/index.html
 - Open a bash shell in a container.
 
 ```bash
-kubectl exec -it <pod-name> -- bash # konteynıra bağlanma
+kubectl exec -it <pod-name> -- bash
 ```
 
 - List the ReplicaSets.

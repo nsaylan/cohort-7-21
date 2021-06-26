@@ -37,8 +37,6 @@ At the end of the this hands-on training, students will be able to;
 
 ## Part 1 - Installing Jenkins Server on Amazon Linux 2 with `yum` Repo
 
-- 4 ec2 kuruldu. Sg: 22, 80, 8080 (custom tcp), 0-65535 (all icmp-ipv)
-
 - Launch an AWS EC2 instance of Amazon Linux 2 AMI with security group allowing SSH and Tomcat (8080) ports and name it as `call-jenkins`.
 
 - Connect to the `call-jenkins` instance with SSH.
