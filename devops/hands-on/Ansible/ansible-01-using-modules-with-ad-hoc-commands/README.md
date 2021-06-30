@@ -26,6 +26,11 @@ At the end of this hands-on training, students will be able to;
 
 - Connect to the control node via SSH and run the following commands.
 
+```
+sudo hostnamectl set-hostname control-node
+bash
+```
+
 ```bash
 sudo yum update -y
 sudo amazon-linux-extras install ansible2
@@ -108,7 +113,7 @@ $ ansible webservers --list-hosts
 - To make sure that all our hosts are reachable, we will run various ad-hoc commands that use the ping module.
 
 ```bash
-$ ansible all -m ping
+$ ansible all -m ping # before this "chmod 400 key.pem"
 $ ansible webservers -m ping
 $ ansible node1 -m ping
 ```
@@ -151,11 +156,16 @@ $ vim ansible.cfg
 - Add the following lines to ```/etc/ansible/ansible.cfg``` file. 
 
 ```
+remove # before host_key_checking = False
 [defaults]
 interpreter_python=auto_silent
 ```
 
 - Run the command below.
+
+```bash
+$ ansible all -m ping # warning olmayacak
+```
 
 ```bash
 $ ansible --help
@@ -166,9 +176,10 @@ $ ansible --help
 - Run the command below.
 
 ```bash
+$ ansible all -m ping -o
 $ ansible webservers -a "uptime"
 web_server1 | CHANGED | rc=0 >>
- 13:00:59 up 42 min,  1 user,  load average: 0.08, 0.02, 0.01
+ 13:00:59 up 42 min,  1 user,  load average: 0.08, 0.02, 0.01 #yellow mode
 ```
 
 - Explain how much the system is up and what is load avarage.
@@ -186,7 +197,7 @@ load average over the last 15 minutes: 1%
 - Run the command below.
 
 ```bash
-$ ansible webservers -m shell -a "systemctl status sshd"
+$ ansible webservers/all -m shell -a "systemctl status sshd"
 ```
 - Explain the output.
 
@@ -205,7 +216,7 @@ $ ansible webservers -a 'df -h'
 - Run the commands below for explaining how to transfer a file.
 
 ```bash
-$ vi testfile    # Create a text file name "testfile"
+$ sudo nano testfile    # Create a text file name "testfile"
   "This is a test file."
 ```
 
