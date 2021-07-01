@@ -60,7 +60,7 @@ ansible_ssh_private_key_file=/home/ec2-user/<pem file>
 
 ```bash
 $ vim ansible.cfg
-[defaults]
+uncomment the line --> host_key_checking = False
 interpreter_python=auto_silent
 ```
 
@@ -104,9 +104,9 @@ ansible-playbook playbook1.yml
        dest: /home/ec2-user/testfile1
 
 - name: Copy for ubuntu
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
-   - name: Copy your file to the ubuntuservers
+   - name: Copy your file to the ubuntuserver
      copy:
        src: /home/ec2-user/testfile1
        dest: /home/ubuntu/testfile1
@@ -137,7 +137,7 @@ $ vim playbook3.yml
        mode: u+rw,g-wx,o-rwx
 
 - name: Copy for ubuntu
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
    - name: Copy your file to the ubuntuservers
      copy:
@@ -185,12 +185,13 @@ $ vim playbook4.yml
      shell: "service httpd start"
 
 - name: Apache installation for ubuntuservers
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
    - name: install the latest version of Apache
      apt:
        name: apache2
        state: latest
+       # update_cache: yes
 ```
 - Run the yaml file.
 
@@ -214,7 +215,7 @@ $ vim playbook5.yml
        state: absent
 
 - name: Remove Apache from ubuntuservers
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
    - name: Remove Apache
      apt:
@@ -239,7 +240,7 @@ vim playbook6.yml
 
 ---
 - name: play 4
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
    - name: installing apache
      apt:
@@ -262,11 +263,15 @@ vim playbook6.yml
   tasks:
     - name: installing httpd and wget
       yum:
-        pkg: "{{ item }}"
+        pkg: "{{ item }}" # warninge uygun değişiklik yapılacak.
         state: present
       with_items:
         - httpd
         - wget
+    - name: start httpd 
+      service:
+        name: httpd
+        state: started
 ```
 
 - Run the yaml file.
@@ -275,6 +280,19 @@ vim playbook6.yml
 ansible-playbook -b playbook6.yml
 ```
 
+- installing git by playbook
+
+```bash
+- name: play 7
+  hosts: webservers
+  tasks:
+    - name: installing git
+        yum: 
+          name: git
+          state: present
+```
+
+
 - Remove Apache and wget from the hosts with playbook7.yml.
 
 ```bash
@@ -282,7 +300,7 @@ vim playbook7.yml
 
 ---
 - name: play 6
-  hosts: ubuntuservers
+  hosts: ubuntuserver
   tasks:
    - name: Uninstalling Apache
      apt:
