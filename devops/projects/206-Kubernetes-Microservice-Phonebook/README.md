@@ -118,7 +118,7 @@ Initial files:
     - index.html
     - add-update.html
     - delete.html
-4. kubernetes-env-cf.yaml         # Given to the students (Cloudformation template for Kubernetes architecture)
+4. cfn-template-to-create-k8s-cluster.yml         # Given to the students (Cloudformation template for Kubernetes architecture)
 
 Requested files:
 
