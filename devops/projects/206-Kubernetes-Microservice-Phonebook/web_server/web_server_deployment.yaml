@@ -13,7 +13,7 @@ spec:
     metadata:
       name: phonebook-app-pod
       labels:
-        app: phonebook-app-pod
+        name: phonebook-app-pod
     spec:
       containers:
       - name: phonbook-app

@@ -13,7 +13,7 @@ spec:
     metadata:
       name: result-app-pod
       labels:
-        app: result-app-pod
+        name: result-app-pod
     spec:
       containers:
       - name: result-app
